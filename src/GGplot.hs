@@ -224,7 +224,7 @@ function plot(
     let y = dfy[colNames[yidx]];
     let width = $("#plot").width();
     if(width === 0) { // the plot tab is initially hidden and then width=0
-        width = 400;
+        width = 770;
     }
     let height = $("#plot").height();
     if(height === 0) {

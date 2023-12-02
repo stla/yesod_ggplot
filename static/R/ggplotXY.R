@@ -25,10 +25,11 @@ dat <- data.frame(x = maybeNumeric(x), y = y)
 
 # plot
 gg <- ggplot(dat, aes(x = x, y = y)) + 
-  geom_point(size = 1) + 
+  geom_point(size = 0.3) + 
   theme(
-    axis.title = element_rect(size = 11),
-    axis.text  = element_rect(size = 9)
+    axis.title = element_text(size = 5),
+    axis.text  = element_text(size = 3),
+    axis.ticks = element_line(linewidth = 0.3)
   )
 
 # save plot as PNG
