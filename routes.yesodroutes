@@ -1,0 +1,3 @@
+/static        StaticR    Static getStatic
+/              HomeR      GET
+/ggplot        GgplotR    GET    PUT

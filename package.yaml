@@ -1,0 +1,28 @@
+name:    yesod_ggplot
+version: "0.0.0"
+
+dependencies:
+- base
+- yesod-core
+- yesod-form
+- yesod-static
+- temporary
+- process
+- regex-compat
+
+# The library contains all of our application code. The executable
+# defined below is just a thin wrapper.
+library:
+  source-dirs: src
+
+# Runnable executable for our application
+executables:
+  yesod_ggplot:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - yesod_ggplot
