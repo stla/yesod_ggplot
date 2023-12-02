@@ -1,4 +1,4 @@
-name:    yesod_ggplot
+name:    yesod-ggplot
 version: "0.0.0"
 
 dependencies:
@@ -17,7 +17,7 @@ library:
 
 # Runnable executable for our application
 executables:
-  yesod_ggplot:
+  yesod-ggplot:
     main: Main.hs
     source-dirs: app
     ghc-options:
@@ -25,4 +25,4 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - yesod_ggplot
+    - yesod-ggplot

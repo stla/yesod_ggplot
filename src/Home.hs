@@ -2,7 +2,7 @@
 {-# LANGUAGE QuasiQuotes       #-}
 module Home where
 
-import Foundation
+import Foundation ( Route(GgplotR), Handler )
 import Yesod.Core ( whamlet, setTitle, Yesod(defaultLayout), Html )
 
 getHomeR :: Handler Html

@@ -5,9 +5,9 @@
 {-# OPTIONS_GHC -fno-warn-orphans #-}
 module Application where
 
-import Foundation
+import Foundation ( Route(GgplotR, StaticR, HomeR), App(getStatic), resourcesApp )
 import Yesod.Core ( mkYesodDispatch )
 import Home       ( getHomeR )
-import Gglot
+import Ggplot     ( getGgplotR, putGgplotR )
 
 mkYesodDispatch "App" resourcesApp

@@ -1,5 +1,5 @@
-library(ggplot2)
 library(jsonlite)
+library(ggplot2)
 library(base64enc)
 
 # extract data from the JSON file
@@ -25,7 +25,11 @@ dat <- data.frame(x = maybeNumeric(x), y = y)
 
 # plot
 gg <- ggplot(dat, aes(x = x, y = y)) + 
-  geom_point()
+  geom_point(size = 1) + 
+  theme(
+    axis.title = element_rect(size = 11),
+    axis.text  = element_rect(size = 9)
+  )
 
 # save plot as PNG
 png <- tempfile(fileext = ".png")

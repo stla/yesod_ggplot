@@ -1,14 +1,36 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE QuasiQuotes       #-}
-module GGplot where
+module Ggplot where
 
-import Foundation
-import Yesod.Core
-import System.Process                   ( readProcessWithExitCode )
-import System.Exit                      ( ExitCode(ExitSuccess) )
-import Text.Regex                       ( mkRegex, subRegex )
-import Control.Monad                    ( when )
-import System.IO.Temp                   ( getCanonicalTemporaryDirectory, createTempDirectory )
+import Foundation     ( Route,
+                        Route(GgplotR, StaticR),
+                        App,
+                        _DataTables_1_13_8_datatables_min_css,
+                        _DataTables_1_13_8_datatables_min_js,
+                        _PapaParse_papaparse_min_js,
+                        _SheetJS_xlsx_core_min_js,
+                        bootstrap_5_3_2_css_bootstrap_min_css,
+                        bootstrap_5_3_2_js_bootstrap_bundle_min_js,
+                        jQuery_jquery_3_7_1_min_js,
+                        Handler )
+import Yesod.Core     ( hamlet,
+                        julius,
+                        requireCheckJsonBody,
+                        addScript,
+                        addStylesheet,
+                        setTitle,
+                        whamlet,
+                        MonadIO(liftIO),
+                        Html,
+                        JavascriptUrl,
+                        Yesod(defaultLayout),
+                        ToWidget(toWidget),
+                        ToWidgetHead(toWidgetHead),
+                        RenderRoute(Route) )
+import System.Process ( readProcessWithExitCode )
+import System.Exit    ( ExitCode(ExitSuccess) )
+import System.IO.Temp ( getCanonicalTemporaryDirectory, createTempDirectory )
+import Text.Regex     ( mkRegex, subRegex )
 
 
 -- write a temporary file and return its path
@@ -36,7 +58,7 @@ getGgplotR = defaultLayout $ do
     [whamlet|
         <body>
             <div #myModal .modal .fade aria-hidden aria-labelledby=myModalLabel tabindex=-1>
-                <div .modal-dialog .modal-dialog-centered">
+                <div .modal-dialog .modal-dialog-centered>
                     <div .modal-content>
                         <div .modal-header>
                             <h1 .modal-title .fs-5>
@@ -100,6 +122,7 @@ getGgplotR = defaultLayout $ do
     addScript $ StaticR _PapaParse_papaparse_min_js
     addScript $ StaticR _SheetJS_xlsx_core_min_js
     toWidget script
+
 
 script :: JavascriptUrl (Route App)
 script = [julius|
@@ -267,13 +290,6 @@ $(function(){
 });
 |]
 
-rCommand :: FilePath -> String
-rCommand file = 
-    "jsonFile<-" ++ quote file ++ 
-        ";source(" ++ quote "static/R/ggplotXY.R" ++ ")"
-    where
-        quote :: String -> String
-        quote x = "\"" ++ x ++ "\""        
 
 putGgplotR :: Handler String
 putGgplotR = do
@@ -285,3 +301,12 @@ putGgplotR = do
     let err = if exitcode == ExitSuccess then "" else stderr
     -- return the error message and the base64 string with a separator
     return $ err ++ "*::*::*::*::*" ++ base64
+    where
+        rCommand :: FilePath -> String
+        rCommand file = 
+            "jsonFile<-" ++ quote file ++ 
+                ";source(" ++ quote "static/R/ggplotXY.R" ++ ")"
+            where
+                quote :: String -> String
+                quote x = "\"" ++ x ++ "\""        
+
